@@ -47,3 +47,21 @@ model User {
   accounts      Account[]
   sessions      Session[]
 }
+
+model Word {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  name        String
+  definitions Definition[]
+}
+
+model Definition {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String
+  type        String
+  word        Word     @relation(fields: [wordId], references: [id])
+  wordId      String   @db.ObjectId
+}

@@ -110,143 +110,29 @@ export const getTrackingSchema = z.object({
 	numVisits: z.number()
 });
 
-export const foodItemSchema = z.object({
-	name: z.string().min(1, 'Name is required'),
-	category: z.string().min(1, 'Category is required'),
-	image: z.string().optional(),
-	carbGrams: z
-		.number()
-		.nullable()
-		.refine((val) => val !== null, { message: 'Carbs can be 0 or greater.' }),
-	fatGrams: z
-		.number()
-		.nullable()
-		.refine((val) => val !== null, { message: 'Fats can be 0 or greater.' }),
-	proteinGrams: z
-		.number()
-		.nullable()
-		.refine((val) => val !== null, { message: 'Protein can be 0 or greater.' }),
-	calories: z
-		.number()
-		.nullable()
-		.refine((val) => val !== null, {
-			message: 'Calories can be 0 or greater.'
-		}),
-	description: z.string().optional(),
-	servingSize: z.number().optional(),
-	userId: z.string().optional()
+export const wordSchema = z.object({
+	name: z.string().min(1, 'name is required')
 });
 
-export const getFoodItemSchema = z.object({
-	id: z.string(),
-	createdAt: z.date(),
-	updatedAt: z.date(),
-	name: z.string(),
-	category: z.string(),
-	image: z.string(),
-	carbGrams: z.number(),
-	fatGrams: z.number(),
-	proteinGrams: z.number(),
-	calories: z.number(),
-	description: z.string(),
-	servingSize: z.number(),
-	userId: z.string().optional(),
-	//user: getUserSchema.optional()
-	user: z.any()
-});
-
-export const foodEntrySchema = z.object({
+export const getWordSchema = z.object({
 	id: z.string(),
 	name: z.string(),
-	category: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
+	definitions: z.array(z.any())
+});
+
+export const definitionSchema = z.object({
+	type: z.string().min(1, 'type is required'),
+	description: z.string().min(1, 'description is required'),
+	wordId: z.string().min(1, 'wordId is required')
+});
+
+export const getDefinitionSchema = z.object({
+	id: z.string(),
+	type: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
 	description: z.string(),
-	numServings: z.number().refine((val) => val !== null, {
-		message: 'Number of servings can be 1 or greater.'
-	}),
-	image: z.string(),
-	carbGrams: z.number().refine((val) => val !== null, {
-		message: 'Carbs can be 0 or greater.'
-	}),
-	proteinGrams: z.number().refine((val) => val !== null, {
-		message: 'Protein can be 0 or greater.'
-	}),
-	fatGrams: z.number().refine((val) => val !== null, {
-		message: 'Fat can be 0 or greater.'
-	}),
-	calories: z.number().refine((val) => val !== null, {
-		message: 'Calories can be 0 or greater.'
-	}),
-	eatenAt: z.date()
-});
-
-export const getFoodEntrySchema = z.object({
-	id: z.string(),
-	name: z.string(),
-	category: z.string(),
-	description: z.string(),
-	numServings: z.number(),
-	image: z.string(),
-	carbGrams: z.number(),
-	proteinGrams: z.number(),
-	fatGrams: z.number(),
-	calories: z.number(),
-	eatenAt: z.date()
-});
-
-export const getKnownCaloriesBurnedSchema = z.object({
-	id: z.string(),
-	createdAt: z.date(),
-	updatedAt: z.date(),
-	userId: z.string(),
-	logId: z.string(),
-	calories: z.number()
-});
-
-export const logSchema = z.object({
-	userId: z.string().min(1, 'User is required'),
-	foodItems: z.array(foodEntrySchema)
-});
-
-export const getLogSchema = z.object({
-	id: z.string(),
-	createdAt: z.date(),
-	updatedAt: z.date(),
-	userId: z.string(),
-	foodItems: z.array(getFoodEntrySchema),
-	knownCaloriesBurned: z.array(getKnownCaloriesBurnedSchema),
-	logRemainder: z.array(z.any()).optional()
-});
-
-export const logRemainderSchema = z.object({
-	userId: z.string().min(1, 'userId is required'),
-	logId: z.string().min(1, 'logId is required'),
-	calories: z.number().refine((val) => val !== null, {
-		message: 'Calories can be 0 or greater.'
-	})
-});
-
-export const getLogRemainderSchema = z.object({
-	id: z.string(),
-	createdAt: z.date(),
-	updatedAt: z.date(),
-	calories: z.number(),
-	logId: z.string(),
-	log: getLogSchema.optional(),
-	userId: z.string(),
-	user: getUserSchema.optional()
-});
-
-export const userNoteSchema = z.object({
-	title: z.string().optional(),
-	note: z.string().min(1, 'note is required'),
-	userId: z.string().min(1, 'userId is required')
-});
-
-export const getUserNoteSchema = z.object({
-	id: z.string(),
-	createdAt: z.date(),
-	updatedAt: z.date(),
-	title: z.string().optional(),
-	note: z.string(),
-	userId: z.string()
+	wordId: z.string()
 });
