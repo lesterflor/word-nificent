@@ -125,7 +125,8 @@ export const getWordSchema = z.object({
 export const definitionSchema = z.object({
 	type: z.string().min(1, 'type is required'),
 	description: z.string().min(1, 'description is required'),
-	wordId: z.string().min(1, 'wordId is required')
+	wordId: z.string().min(1, 'wordId is required'),
+	id: z.string().optional()
 });
 
 export const getDefinitionSchema = z.object({
