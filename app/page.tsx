@@ -47,6 +47,7 @@ export default async function Home() {
 			<div className='portrait:flex flex-col grid grid-cols-2 gap-4'>
 				{wordList.map((word) => (
 					<WordCard
+						gameMode={true}
 						key={word.id}
 						word={word}
 					/>

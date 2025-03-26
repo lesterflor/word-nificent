@@ -6,6 +6,7 @@ import { ThemeProvider } from 'next-themes';
 import SiteHeader from '@/components/header/header';
 import { Toaster } from '@/components/ui/sonner';
 import AddWordProvider from '@/providers/add-word-provider';
+import LetterWordProvider from '@/providers/letter-word-provider';
 
 export const metadata: Metadata = {
 	title: {
@@ -42,10 +43,12 @@ export default async function RootLayout({
 					disableTransitionOnChange>
 					<SessionProvider session={session}>
 						<AddWordProvider>
-							<SiteHeader />
-							<main className='flex-1 wrapper w-5/6 portrait:w-full portrait:px-3 mx-auto mt-20 select-none'>
-								{children}{' '}
-							</main>
+							<LetterWordProvider>
+								<SiteHeader />
+								<main className='flex-1 wrapper w-5/6 portrait:w-full portrait:px-3 mx-auto mt-20 select-none'>
+									{children}{' '}
+								</main>
+							</LetterWordProvider>
 						</AddWordProvider>
 					</SessionProvider>
 					<Toaster />
