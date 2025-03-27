@@ -3,21 +3,10 @@ import ModeToggle from './mode-toggle';
 import UserButton from './user-button';
 import { Puzzle } from 'lucide-react';
 import { auth } from '@/db/auth';
-import { GetUser } from '@/types';
-import {
-	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetTitle,
-	SheetTrigger
-} from '../ui/sheet';
-import { Button } from '../ui/button';
-import { ScrollArea } from '../ui/scroll-area';
-import AddWordForm from '../word/add-word-form';
 
 export default async function SiteHeader() {
 	const session = await auth();
-	const user = session?.user as GetUser;
+	//const user = session?.user as GetUser;
 
 	return (
 		<header className='w-full border-b fixed top-0 z-50 bg-white dark:bg-blue-950 select-none px-0'>
@@ -52,7 +41,7 @@ export default async function SiteHeader() {
 						</div>
 					</Link>
 
-					{user.role === 'admin' && (
+					{/* {user.role === 'admin' && (
 						<Sheet>
 							<SheetTrigger asChild>
 								<Button className='hidden'>Add Word</Button>
@@ -66,7 +55,7 @@ export default async function SiteHeader() {
 								</ScrollArea>
 							</SheetContent>
 						</Sheet>
-					)}
+					)} */}
 				</div>
 
 				<div className='flex flex-row justify-end gap-2 items-center'>
