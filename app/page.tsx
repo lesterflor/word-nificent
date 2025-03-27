@@ -1,16 +1,9 @@
 import { getRawWords } from '@/actions/word-actions';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import {
-	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetTitle,
-	SheetTrigger
-} from '@/components/ui/sheet';
-import AddWordForm from '@/components/word/add-word-form';
-import WordCard from '@/components/word/word-card';
+import StatsHud from '@/components/stats/stats-hud';
+
+import CarouselWords from '@/components/word/carousel-words';
 import { auth } from '@/db/auth';
+import { getRandomLetter, shuffle } from '@/lib/utils';
 import { GetRawWord } from '@/types';
 import { redirect } from 'next/navigation';
 
@@ -21,37 +14,18 @@ export default async function Home() {
 		redirect('/sign-in');
 	}
 
-	const words = await getRawWords();
+	const words = await getRawWords(getRandomLetter());
 
-	const wordList = (words.data as GetRawWord[]) ?? [];
+	const shuffled = shuffle([...(words.data ?? [])]);
+
+	const wordList = (shuffled as GetRawWord[]) ?? [];
 
 	return (
-		<div className='flex flex-col gap-2'>
-			<div>Word-Nificent</div>
-			<div>
-				<Sheet>
-					<SheetTrigger asChild>
-						<Button>Add Word</Button>
-					</SheetTrigger>
-					<SheetContent className='flex flex-col gap-5 px-4 max-w-[95vw] w-[85vw] portrait:w-[85vw]'>
-						<SheetDescription></SheetDescription>
-						<SheetTitle>Add Word</SheetTitle>
-						<ScrollArea className='w-full h-[85vh] pr-3'>
-							<AddWordForm />
-							<br />
-						</ScrollArea>
-					</SheetContent>
-				</Sheet>
-			</div>
+		<div className='flex flex-col gap-6'>
+			<StatsHud />
 
 			<div className='flex flex-col gap-4'>
-				{wordList.map((word) => (
-					<WordCard
-						gameMode={true}
-						key={word.id}
-						word={word}
-					/>
-				))}
+				<CarouselWords words={wordList} />
 			</div>
 		</div>
 	);

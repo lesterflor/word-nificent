@@ -134,8 +134,6 @@
 }
 
 .tile {
-	@apply w-12;
-	@apply h-12;
 	@apply relative;
 	transform-style: preserve-3d;
 	transition: transform 1s;

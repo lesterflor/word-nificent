@@ -7,6 +7,7 @@ import SiteHeader from '@/components/header/header';
 import { Toaster } from '@/components/ui/sonner';
 import AddWordProvider from '@/providers/add-word-provider';
 import LetterWordProvider from '@/providers/letter-word-provider';
+import WinWordProvider from '@/providers/win-provider';
 
 export const metadata: Metadata = {
 	title: {
@@ -44,10 +45,12 @@ export default async function RootLayout({
 					<SessionProvider session={session}>
 						<AddWordProvider>
 							<LetterWordProvider>
-								<SiteHeader />
-								<main className='flex-1 wrapper w-1/2 portrait:w-full portrait:px-3 mx-auto mt-20 select-none'>
-									{children}{' '}
-								</main>
+								<WinWordProvider>
+									<SiteHeader />
+									<main className='flex-1 wrapper w-1/2 portrait:w-full portrait:px-3 mx-auto mt-20 select-none'>
+										{children}{' '}
+									</main>
+								</WinWordProvider>
 							</LetterWordProvider>
 						</AddWordProvider>
 					</SessionProvider>

@@ -99,6 +99,9 @@ export async function getUserById(userId: string) {
 	const user = await prisma.user.findFirst({
 		where: {
 			id: userId
+		},
+		include: {
+			wordsSolved: true
 		}
 	});
 

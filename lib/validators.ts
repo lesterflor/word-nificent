@@ -131,7 +131,7 @@ export const getRawWordSchema = z.object({
 	name: z.string(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
-	definitions: z.array(z.any())
+	definitions: z.array(z.any()).optional()
 });
 
 export const definitionSchema = z.object({

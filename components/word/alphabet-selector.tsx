@@ -35,7 +35,7 @@ export default function AlphabetSelector({
 	}, [selected]);
 
 	return (
-		<div className='flex flex-row flex-wrap gap-3 items-start justify-center'>
+		<div className='flex flex-row flex-wrap gap-3 portrait:gap-2 items-start justify-center'>
 			{letters.map((letter) => (
 				<Button
 					onClick={(e) => {

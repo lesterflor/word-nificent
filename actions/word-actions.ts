@@ -4,6 +4,7 @@ import prisma from '@/db/prisma';
 import { formatError } from '@/lib/utils';
 import {
 	GetRawWord,
+	GetUser,
 	GetWord,
 	Word,
 	WordDefinition,
@@ -11,6 +12,7 @@ import {
 } from '@/types';
 import { revalidatePath } from 'next/cache';
 import fs from 'fs';
+import { auth } from '@/db/auth';
 
 export async function addWord(word: Word, definitions: WordDefinition[]) {
 	try {
@@ -80,16 +82,43 @@ export async function getWords() {
 	}
 }
 
-export async function getRawWords() {
+export async function getRawWords(letter: string = '') {
 	try {
+		const session = await auth();
+
+		if (!session) {
+			throw new Error('User must be authenticated');
+		}
+
+		const user = session.user as GetUser;
+
+		const existingUser = await prisma.user.findFirst({
+			where: { id: user.id },
+			include: {
+				wordsSolved: true
+			}
+		});
+
+		if (!existingUser) {
+			throw new Error('User was not found');
+		}
+
+		const exlcudedIds = existingUser.wordsSolved.map((item) => item.id);
+
 		const words = await prisma.rawWord.findMany({
+			where: {
+				name: letter ? { startsWith: letter, mode: 'insensitive' } : undefined,
+				id: {
+					notIn: exlcudedIds
+				}
+			},
 			orderBy: {
 				name: 'asc'
 			},
 			include: {
 				definitions: true
 			},
-			take: 20
+			take: 100
 		});
 
 		if (!words) {
@@ -97,7 +126,8 @@ export async function getRawWords() {
 		}
 
 		const filtered = words.filter(
-			(word) => word.name !== '' && word.name.length < 8
+			(word) =>
+				word.name !== '' && word.name.length < 11 && word.name.length > 4
 		);
 
 		return {
@@ -113,7 +143,7 @@ export async function getRawWords() {
 	}
 }
 
-export async function addRawWordDefinition(word: GetRawWord | GetWord) {
+export async function getRawWordDefinition(word: GetRawWord | GetWord) {
 	try {
 		const { name } = word;
 
@@ -220,6 +250,51 @@ export async function seedList() {
 			success: true,
 			message: 'success',
 			data: rawWords
+		};
+	} catch (error: unknown) {
+		return {
+			success: true,
+			message: formatError(error)
+		};
+	}
+}
+
+export async function updateUserSolvedWord(rawWordId: string) {
+	try {
+		const session = await auth();
+
+		if (!session) {
+			throw new Error('User must be authenticated');
+		}
+
+		const user = session?.user as GetUser;
+
+		const existingWord = await prisma.rawWord.findFirst({
+			where: {
+				id: rawWordId
+			}
+		});
+
+		if (!existingWord) {
+			throw new Error('The word was not found');
+		}
+
+		const update = await prisma.rawWord.update({
+			where: {
+				id: existingWord.id
+			},
+			data: {
+				userId: user.id
+			}
+		});
+
+		if (!update) {
+			throw new Error('There was a problem updating the word');
+		}
+
+		return {
+			success: true,
+			message: 'success adding word to user'
 		};
 	} catch (error: unknown) {
 		return {

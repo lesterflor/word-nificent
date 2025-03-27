@@ -3,9 +3,21 @@ import ModeToggle from './mode-toggle';
 import UserButton from './user-button';
 import { Puzzle } from 'lucide-react';
 import { auth } from '@/db/auth';
+import { GetUser } from '@/types';
+import {
+	Sheet,
+	SheetContent,
+	SheetDescription,
+	SheetTitle,
+	SheetTrigger
+} from '../ui/sheet';
+import { Button } from '../ui/button';
+import { ScrollArea } from '../ui/scroll-area';
+import AddWordForm from '../word/add-word-form';
 
 export default async function SiteHeader() {
 	const session = await auth();
+	const user = session?.user as GetUser;
 
 	return (
 		<header className='w-full border-b fixed top-0 z-50 bg-white dark:bg-blue-950 select-none px-0'>
@@ -27,11 +39,11 @@ export default async function SiteHeader() {
 									</>
 								) : (
 									<>
-										<span className='dark:text-white text-black text-2xl font-bold thin-title portrait:hidden'>
+										<span className='dark:text-white text-black text-2xl font-bold thin-title'>
 											WordNificent
 										</span>
 
-										<span className='text-xs portrait:hidden'>
+										<span className='text-xs'>
 											Games and puzzles to test your English vocabulary
 										</span>
 									</>
@@ -39,10 +51,26 @@ export default async function SiteHeader() {
 							</div>
 						</div>
 					</Link>
+
+					{user.role === 'admin' && (
+						<Sheet>
+							<SheetTrigger asChild>
+								<Button className='hidden'>Add Word</Button>
+							</SheetTrigger>
+							<SheetContent className='flex flex-col gap-5 px-4 max-w-[95vw] w-[85vw] portrait:w-[85vw]'>
+								<SheetDescription></SheetDescription>
+								<SheetTitle>Add Word</SheetTitle>
+								<ScrollArea className='w-full h-[85vh] pr-3'>
+									<AddWordForm />
+									<br />
+								</ScrollArea>
+							</SheetContent>
+						</Sheet>
+					)}
 				</div>
 
-				<div className='flex flex-row portrait:flex-col justify-end gap-2 items-center'>
-					<div className='hidden lg:block'>
+				<div className='flex flex-row justify-end gap-2 items-center'>
+					<div>
 						<ModeToggle />
 					</div>
 

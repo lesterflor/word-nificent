@@ -87,7 +87,9 @@ export const formatDateTime = (dateString: Date) => {
 };
 
 export function shuffle(array: any[]) {
-	let currentIndex = array.length;
+	const copy = [...array];
+
+	let currentIndex = copy.length;
 
 	// While there remain elements to shuffle...
 	while (currentIndex != 0) {
@@ -96,11 +98,13 @@ export function shuffle(array: any[]) {
 		currentIndex--;
 
 		// And swap it with the current element.
-		[array[currentIndex], array[randomIndex]] = [
-			array[randomIndex],
-			array[currentIndex]
+		[copy[currentIndex], copy[randomIndex]] = [
+			copy[randomIndex],
+			copy[currentIndex]
 		];
 	}
+
+	return copy;
 }
 
 export function setStorageItem(name: string, value: any) {
@@ -269,4 +273,12 @@ export function findLettersInWord(str: string, letter: string) {
 	});
 
 	return { indices, updatedWord: word.join('') };
+}
+
+export function getRandomLetter() {
+	const alpha = 'abcdefghijklmnopqrstuvwxyz';
+	const arr = alpha.split('');
+	const randIndx = Math.floor(Math.random() * (arr.length - 0 + 1)) + 0;
+
+	return arr[randIndx];
 }
