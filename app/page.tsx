@@ -1,4 +1,4 @@
-import { getWords } from '@/actions/word-actions';
+import { getRawWords } from '@/actions/word-actions';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
@@ -11,7 +11,7 @@ import {
 import AddWordForm from '@/components/word/add-word-form';
 import WordCard from '@/components/word/word-card';
 import { auth } from '@/db/auth';
-import { GetWord } from '@/types';
+import { GetRawWord } from '@/types';
 import { redirect } from 'next/navigation';
 
 export default async function Home() {
@@ -21,9 +21,9 @@ export default async function Home() {
 		redirect('/sign-in');
 	}
 
-	const words = await getWords();
+	const words = await getRawWords();
 
-	const wordList = (words.data as GetWord[]) ?? [];
+	const wordList = (words.data as GetRawWord[]) ?? [];
 
 	return (
 		<div className='flex flex-col gap-2'>
@@ -44,7 +44,7 @@ export default async function Home() {
 				</Sheet>
 			</div>
 
-			<div className='portrait:flex flex-col grid grid-cols-2 gap-4'>
+			<div className='flex flex-col gap-4'>
 				{wordList.map((word) => (
 					<WordCard
 						gameMode={true}

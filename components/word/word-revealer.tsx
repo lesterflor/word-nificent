@@ -1,7 +1,7 @@
 'use client';
 
 import { LetterWordContext } from '@/contexts/letter-word-context';
-import { checkAnagram, cn } from '@/lib/utils';
+import { cn, findLettersInWord } from '@/lib/utils';
 import { Puzzle } from 'lucide-react';
 import { useContext, useEffect, useState } from 'react';
 
@@ -22,6 +22,7 @@ export default function WordRevealer({
 	const [guessArr, setGuessArr] = useState<number[]>([]);
 	const [hasSolved, setHasSolved] = useState(false);
 	const [currentLetter, setCurrenLetter] = useState('');
+	const [remainingLetters, setRemainingLetters] = useState(word);
 	const letterWordContext = useContext(LetterWordContext);
 
 	useEffect(() => {
@@ -37,15 +38,16 @@ export default function WordRevealer({
 				setCurrenLetter(cLetter);
 				update.push(cLetter);
 				setRevealedLetters(update);
+
+				const { updatedWord } = findLettersInWord(remainingLetters, cLetter);
+				setRemainingLetters(updatedWord);
 			}
 		}
 	}, [letterWordContext]);
 
 	useEffect(() => {
-		setTimeout(() => {
-			setHasSolved(checkAnagram(word, revealedLetters.join('')));
-		}, 1000);
-	}, [revealedLetters]);
+		setHasSolved(remainingLetters.length === 0);
+	}, [remainingLetters]);
 
 	useEffect(() => {
 		if (currentLetter) {
@@ -73,7 +75,7 @@ export default function WordRevealer({
 
 	return (
 		<div className='flex flex-col gap-6 items-center'>
-			<div className='flex flex-row items-center gap-4'>
+			<div className='flex flex-row items-center gap-2'>
 				{letters.length > 0 &&
 					letters.map((letter, indx) => (
 						<div

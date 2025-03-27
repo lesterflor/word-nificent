@@ -252,3 +252,21 @@ export function checkAnagram(str1: string, str2: string) {
 	// Compare sorted strings
 	return sortedStr1 === sortedStr2;
 }
+
+export function findLettersInWord(str: string, letter: string) {
+	const indices = [];
+	const word = str.split('');
+	for (
+		let pos = str.indexOf(letter);
+		pos !== -1;
+		pos = str.indexOf(letter, pos + 1)
+	) {
+		indices.push(pos);
+	}
+
+	indices.forEach((indx) => {
+		delete word[indx];
+	});
+
+	return { indices, updatedWord: word.join('') };
+}

@@ -122,6 +122,18 @@ export const getWordSchema = z.object({
 	definitions: z.array(z.any())
 });
 
+export const rawWordSchema = z.object({
+	name: z.string().min(1, 'name is required')
+});
+
+export const getRawWordSchema = z.object({
+	id: z.string(),
+	name: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
+	definitions: z.array(z.any())
+});
+
 export const definitionSchema = z.object({
 	type: z.string().min(1, 'type is required'),
 	description: z.string().min(1, 'description is required'),

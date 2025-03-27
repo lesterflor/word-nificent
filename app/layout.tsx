@@ -45,7 +45,7 @@ export default async function RootLayout({
 						<AddWordProvider>
 							<LetterWordProvider>
 								<SiteHeader />
-								<main className='flex-1 wrapper w-5/6 portrait:w-full portrait:px-3 mx-auto mt-20 select-none'>
+								<main className='flex-1 wrapper w-1/2 portrait:w-full portrait:px-3 mx-auto mt-20 select-none'>
 									{children}{' '}
 								</main>
 							</LetterWordProvider>

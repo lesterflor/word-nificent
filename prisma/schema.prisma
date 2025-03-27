@@ -56,6 +56,14 @@ model Word {
   definitions Definition[]
 }
 
+model RawWord {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  name        String
+  definitions Definition[]
+}
+
 model Definition {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt   DateTime @default(now())
@@ -64,4 +72,6 @@ model Definition {
   type        String
   word        Word     @relation(fields: [wordId], references: [id])
   wordId      String   @db.ObjectId
+  rawWord     RawWord? @relation(fields: [rawWordId], references: [id])
+  rawWordId   String?  @db.ObjectId
 }
