@@ -11,12 +11,12 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { Button } from '../ui/button';
 import { toast } from 'sonner';
 import { BuyRevealContext } from '@/contexts/buy-reveal-context';
-import { FaCashRegister } from 'react-icons/fa';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import NumberIncrementor from '../number-incrementor';
 import { Badge } from '../ui/badge';
 import { GiSquirrel } from 'react-icons/gi';
 import { ArrowLeftRight } from 'lucide-react';
+import { ImEyePlus } from 'react-icons/im';
 import { SpendRevealContext } from '@/contexts/spend-reveal-context';
 
 export default function UserReveals() {
@@ -117,8 +117,8 @@ export default function UserReveals() {
 				open={containerOpen}
 				onOpenChange={setContainerOpen}>
 				<PopoverTrigger asChild>
-					<Button className='w-24'>
-						<FaCashRegister className='w-4 h-4' /> Reveals{' '}
+					<Button>
+						<ImEyePlus className='w-8 h-8' />
 						{userReveals > 0 ? userReveals : ''}
 					</Button>
 				</PopoverTrigger>

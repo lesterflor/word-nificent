@@ -44,7 +44,7 @@ export default function StatsHud() {
 				<div className='text-muted-foreground'>Hi, {user.name}</div>
 			</div> */}
 
-			<div className='flex flex-col gap-1'>
+			<div className='flex flex-row gap-2'>
 				<UserScore />
 				<UserReveals />
 			</div>
