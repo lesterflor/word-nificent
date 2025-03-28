@@ -98,7 +98,7 @@ export default function WordCard({
 						/>
 					</>
 				)}
-				<div className='text-xs text-muted-foreground absolute -top-6'>
+				<div className='text-xs text-muted-foreground absolute -top-6 hidden'>
 					{word.name}
 				</div>
 			</CardHeader>
