@@ -41,7 +41,7 @@ export default function StatsHud() {
 				</Avatar>
 				<div className='text-muted-foreground'>Hi, {user.name}</div>
 			</div>
-			<div className='text-xs'>
+			<div className='text-xs text-muted-foreground'>
 				You have solved {solvedWords?.length}{' '}
 				{solvedWords?.length === 1 ? 'word' : 'words'}
 			</div>

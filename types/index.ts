@@ -53,3 +53,10 @@ export type ApiWordDefinition = {
 		definition: string;
 	}[];
 };
+
+export type PlayerType = {
+	id: string;
+	name: string;
+	image: string;
+	wordsSolved: GetRawWord[];
+};

@@ -278,7 +278,7 @@ export function findLettersInWord(str: string, letter: string) {
 export function getRandomLetter() {
 	const alpha = 'abcdefghijklmnopqrstuvwxyz';
 	const arr = alpha.split('');
-	const randIndx = Math.floor(Math.random() * (arr.length - 0 + 1)) + 0;
+	const randIndx = Math.floor(Math.random() * arr.length);
 
 	return arr[randIndx];
 }

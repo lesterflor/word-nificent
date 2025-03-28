@@ -2,9 +2,9 @@
 
 import { LetterWordContext } from '@/contexts/letter-word-context';
 import { cn, findLettersInWord } from '@/lib/utils';
-import { Puzzle } from 'lucide-react';
 import { LiaCookieBiteSolid } from 'react-icons/lia';
 import { useContext, useEffect, useState } from 'react';
+import { FaPuzzlePiece } from 'react-icons/fa';
 
 export default function WordRevealer({
 	word,
@@ -132,7 +132,7 @@ export default function WordRevealer({
 							</div>
 
 							<div className='tile__face tile__face--front'>
-								<Puzzle className='w-4 h-4 text-muted-foreground' />
+								<FaPuzzlePiece className='w-4 h-4 text-muted-foreground' />
 							</div>
 						</div>
 					))}

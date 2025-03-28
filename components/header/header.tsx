@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import ModeToggle from './mode-toggle';
 import UserButton from './user-button';
-import { Puzzle } from 'lucide-react';
 import { auth } from '@/db/auth';
+import { FaPuzzlePiece } from 'react-icons/fa6';
 
 export default async function SiteHeader() {
 	const session = await auth();
@@ -14,7 +14,7 @@ export default async function SiteHeader() {
 				<div className='flex flex-row items-center justify-start gap-5 portrait:gap-0'>
 					<Link href='/'>
 						<div className='flex flex-row items-center gap-2'>
-							<Puzzle className='w-8 h-8' />
+							<FaPuzzlePiece className='w-8 h-8' />
 							<div className='flex flex-col gap-0'>
 								{!session ? (
 									<>

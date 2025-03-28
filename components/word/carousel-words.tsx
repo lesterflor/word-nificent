@@ -6,6 +6,8 @@ import WordCard from './word-card';
 import { useEffect, useState } from 'react';
 import { type CarouselApi } from '@/components/ui/carousel';
 import { Button } from '../ui/button';
+import LeaderboardHud from '../leaderboard/leaderboard-hud';
+import { ChevronRight } from 'lucide-react';
 
 export default function CarouselWords({ words }: { words: GetRawWord[] }) {
 	const [api, setApi] = useState<CarouselApi>();
@@ -33,7 +35,7 @@ export default function CarouselWords({ words }: { words: GetRawWord[] }) {
 	// };
 
 	return (
-		<div className='flex flex-col gap-6'>
+		<div className='flex flex-col gap-2'>
 			<Carousel
 				setApi={setApi}
 				opts={{ watchDrag: false }}>
@@ -41,7 +43,7 @@ export default function CarouselWords({ words }: { words: GetRawWord[] }) {
 					{words.map((word) => (
 						<CarouselItem
 							key={word.id}
-							className='my-4'>
+							className='my-2'>
 							<WordCard
 								gameMode={true}
 								word={word}
@@ -50,15 +52,18 @@ export default function CarouselWords({ words }: { words: GetRawWord[] }) {
 					))}
 				</CarouselContent>
 			</Carousel>
-			<div className='flex flex-row items-center justify-between'>
-				{/* {current > 1 && (
-					<Button onClick={() => scrollToPrevious()}>Previous</Button>
-				)} */}
+			<div className='text-xs text-muted-foreground whitespace-nowrap w-full text-center'>
+				{current} of {count}
+			</div>
 
-				<div>
-					{current} of {count}
-				</div>
-				<Button onClick={() => scrollToNext()}>Next</Button>
+			<div className='flex flex-row items-center justify-between'>
+				<LeaderboardHud />
+
+				<Button
+					onClick={() => scrollToNext()}
+					className='flex flex-row items-center justify-center'>
+					Next <ChevronRight className='w-4 h-4' />
+				</Button>
 			</div>
 		</div>
 	);

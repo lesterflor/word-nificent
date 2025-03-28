@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { auth } from '@/db/auth';
 import CredentialsSignInForm from './sign-in-form';
-import { Puzzle } from 'lucide-react';
+import { FaPuzzlePiece } from 'react-icons/fa6';
 
 export const metadata: Metadata = {
 	title: 'Sign In'
@@ -31,7 +31,7 @@ export default async function SignInPage(props: {
 					<Link
 						href='/'
 						className='flex-center'>
-						<Puzzle className='w-12 h-12' />
+						<FaPuzzlePiece className='w-12 h-12' />
 					</Link>
 					<CardTitle className='text-center'>
 						Sign In to start playing!
