@@ -107,6 +107,10 @@ export default function UserReveals() {
 		getUserReveals();
 	}, []);
 
+	useEffect(() => {
+		getUserReveals();
+	}, [buyRevealContext]);
+
 	return (
 		<div className='flex flex-row items-center gap-6'>
 			<Popover

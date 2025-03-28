@@ -182,3 +182,20 @@ export const getUserBalanceSchema = z.object({
 	userId: z.string(),
 	user: z.any()
 });
+
+export const userLogSchema = z.object({
+	rewards: z.number().refine((val) => val !== null, {
+		message: 'balance can be 0 or greater.'
+	}),
+	userId: z.string().min(1, 'userId is required')
+});
+
+export const getUserLogSchema = z.object({
+	id: z.string(),
+	type: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
+	rewards: z.number(),
+	userId: z.string(),
+	user: z.any()
+});

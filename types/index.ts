@@ -3,11 +3,13 @@ import {
 	getDefinitionSchema,
 	getRawWordSchema,
 	getUserBalanceSchema,
+	getUserLogSchema,
 	getUserSchema,
 	getUserScoreSchema,
 	getWordSchema,
 	rawWordSchema,
 	userBalanceSchema,
+	userLogSchema,
 	userSchema,
 	userScoreSchema,
 	wordSchema
@@ -31,6 +33,9 @@ export type GetUserScore = z.infer<typeof getUserScoreSchema>;
 
 export type UserBalance = z.infer<typeof userBalanceSchema>;
 export type GetUserBalance = z.infer<typeof getUserBalanceSchema>;
+
+export type UserLog = z.infer<typeof userLogSchema>;
+export type GetUserLog = z.infer<typeof getUserLogSchema>;
 
 export type DictionaryAPIDefinitionType = {
 	definition: string;

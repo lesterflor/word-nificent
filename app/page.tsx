@@ -1,4 +1,5 @@
 import { getRawWords } from '@/actions/word-actions';
+import PromoDialog from '@/components/promotion/promo-dialog';
 import StatsHud from '@/components/stats/stats-hud';
 
 import CarouselWords from '@/components/word/carousel-words';
@@ -35,6 +36,7 @@ export default async function Home() {
 			<div className='flex flex-col gap-3'>
 				<CarouselWords words={wordList} />
 			</div>
+			<PromoDialog />
 		</div>
 	);
 }
