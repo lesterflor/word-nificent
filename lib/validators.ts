@@ -149,3 +149,36 @@ export const getDefinitionSchema = z.object({
 	description: z.string(),
 	wordId: z.string()
 });
+
+export const userScoreSchema = z.object({
+	score: z.number().refine((val) => val !== null, {
+		message: 'score can be 0 or greater.'
+	}),
+	userId: z.string().min(1, 'userId is required')
+});
+
+export const getUserScoreSchema = z.object({
+	id: z.string(),
+	type: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
+	score: z.number(),
+	userId: z.string()
+});
+
+export const userBalanceSchema = z.object({
+	balance: z.number().refine((val) => val !== null, {
+		message: 'balance can be 0 or greater.'
+	}),
+	userId: z.string().min(1, 'userId is required')
+});
+
+export const getUserBalanceSchema = z.object({
+	id: z.string(),
+	type: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
+	balance: z.number(),
+	userId: z.string(),
+	user: z.any()
+});

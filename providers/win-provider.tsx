@@ -11,6 +11,7 @@ export default function WinWordProvider({
 }) {
 	const [newWord, setWord] = useState<IWinContext>({
 		word: {} as GetRawWord,
+		guesses: 0,
 		updated: (value: IWinContext) => setWord(value)
 	});
 

@@ -8,6 +8,9 @@ import { Toaster } from '@/components/ui/sonner';
 import AddWordProvider from '@/providers/add-word-provider';
 import LetterWordProvider from '@/providers/letter-word-provider';
 import WinWordProvider from '@/providers/win-provider';
+import BuyRevealProvider from '@/providers/buy-reveal-provider';
+import RevealWordLetterProvider from '@/providers/reveal-word-letter-provider';
+import SpendRevealProvider from '@/providers/spend-reveal-provider';
 
 export const metadata: Metadata = {
 	title: {
@@ -46,10 +49,16 @@ export default async function RootLayout({
 						<AddWordProvider>
 							<LetterWordProvider>
 								<WinWordProvider>
-									<SiteHeader />
-									<main className='flex-1 wrapper w-1/2 portrait:w-full portrait:px-3 mx-auto mt-20 select-none'>
-										{children}{' '}
-									</main>
+									<BuyRevealProvider>
+										<RevealWordLetterProvider>
+											<SpendRevealProvider>
+												<SiteHeader />
+												<main className='flex-1 wrapper w-1/2 portrait:w-full portrait:px-3 mx-auto mt-20 select-none'>
+													{children}{' '}
+												</main>
+											</SpendRevealProvider>
+										</RevealWordLetterProvider>
+									</BuyRevealProvider>
 								</WinWordProvider>
 							</LetterWordProvider>
 						</AddWordProvider>

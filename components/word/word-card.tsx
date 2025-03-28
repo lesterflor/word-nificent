@@ -25,6 +25,8 @@ export default function WordCard({
 }) {
 	const [won, setWon] = useState(-1);
 	const [wordDef, setWordDef] = useState<ApiWordDefinition>();
+	const [guessesToWin, setGuessesToWin] = useState(0);
+	const [isImmutable, setIsImmutable] = useState(false);
 
 	const divRef = useRef<HTMLDivElement>(null);
 	const winContext = useContext(WinContext);
@@ -38,6 +40,10 @@ export default function WordCard({
 	};
 
 	useEffect(() => {
+		if (isImmutable) {
+			return;
+		}
+
 		if (won === 1 && divRef.current) {
 			getWordDefinition();
 			addSolvedWordToUser();
@@ -51,11 +57,14 @@ export default function WordCard({
 			if (winContext?.updated) {
 				const update = {
 					...winContext,
-					word
+					word,
+					guesses: guessesToWin
 				};
 
 				winContext.updated(update);
 			}
+
+			setIsImmutable(true);
 		}
 	}, [won]);
 
@@ -82,13 +91,14 @@ export default function WordCard({
 							onOverGuess={() => {
 								setWon(0);
 							}}
-							onUnderGuess={() => {
+							onUnderGuess={(guesses) => {
+								setGuessesToWin(guesses);
 								setWon(1);
 							}}
 						/>
 					</>
 				)}
-				<div className='text-xs text-muted-foreground absolute -top-6 hidden'>
+				<div className='text-xs text-muted-foreground absolute -top-6'>
 					{word.name}
 				</div>
 			</CardHeader>

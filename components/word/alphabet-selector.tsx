@@ -3,6 +3,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import { LetterWordContext } from '@/contexts/letter-word-context';
+import { RevealWordLetterContext } from '@/contexts/reveal-word-letter-context';
 
 export default function AlphabetSelector({
 	word,
@@ -17,22 +18,41 @@ export default function AlphabetSelector({
 	const [selected, setSelected] = useState('');
 	const letterWordContext = useContext(LetterWordContext);
 
+	const revealLetterContext = useContext(RevealWordLetterContext);
+
 	useEffect(() => {
 		if (selected) {
 			onSelect?.(selected);
 
-			if (letterWordContext?.updated) {
-				const update = {
-					...letterWordContext,
-					data: {
-						word,
-						letter: selected
-					}
-				};
-				letterWordContext.updated(update);
-			}
+			const updated = [...usedLetters];
+			updated.push(selected);
+
+			setUsedLetters(updated);
+
+			dispatchLetterContext();
 		}
 	}, [selected]);
+
+	const dispatchLetterContext = () => {
+		if (letterWordContext?.updated) {
+			const update = {
+				...letterWordContext,
+				data: {
+					word,
+					letter: selected
+				}
+			};
+			letterWordContext.updated(update);
+		}
+	};
+
+	useEffect(() => {
+		if (revealLetterContext?.data.word === word) {
+			const { letter: cLetter } = revealLetterContext.data;
+
+			setSelected(cLetter);
+		}
+	}, [revealLetterContext]);
 
 	return (
 		<div className='flex flex-row flex-wrap gap-3 portrait:gap-2 items-start justify-center'>
@@ -42,11 +62,6 @@ export default function AlphabetSelector({
 						e.preventDefault();
 
 						setSelected(letter);
-
-						const updated = [...usedLetters];
-						updated.push(letter);
-
-						setUsedLetters(updated);
 					}}
 					size='icon'
 					key={letter}

@@ -2,10 +2,14 @@ import {
 	definitionSchema,
 	getDefinitionSchema,
 	getRawWordSchema,
+	getUserBalanceSchema,
 	getUserSchema,
+	getUserScoreSchema,
 	getWordSchema,
 	rawWordSchema,
+	userBalanceSchema,
 	userSchema,
+	userScoreSchema,
 	wordSchema
 } from '@/lib/validators';
 import { z } from 'zod';
@@ -21,6 +25,12 @@ export type GetRawWord = z.infer<typeof getRawWordSchema>;
 
 export type WordDefinition = z.infer<typeof definitionSchema>;
 export type GetWordDefinition = z.infer<typeof getDefinitionSchema>;
+
+export type UserScore = z.infer<typeof userScoreSchema>;
+export type GetUserScore = z.infer<typeof getUserScoreSchema>;
+
+export type UserBalance = z.infer<typeof userBalanceSchema>;
+export type GetUserBalance = z.infer<typeof getUserBalanceSchema>;
 
 export type DictionaryAPIDefinitionType = {
 	definition: string;

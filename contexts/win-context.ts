@@ -5,6 +5,7 @@ import { createContext } from 'react';
 
 export interface IWinContext {
 	word: GetRawWord;
+	guesses: number;
 	updated?: (update: IWinContext) => void;
 }
 
