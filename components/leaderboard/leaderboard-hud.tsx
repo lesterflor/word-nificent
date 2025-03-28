@@ -66,7 +66,7 @@ export default function LeaderboardHud() {
 						loop={true}
 						autoPlay={true}
 					/>{' '}
-					Top Scores
+					Top Solvers
 				</SheetTitle>
 				<SheetDescription></SheetDescription>
 				<div className='flex flex-col gap-2'>
