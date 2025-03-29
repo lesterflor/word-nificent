@@ -17,6 +17,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { WinContext } from '@/contexts/win-context';
 import { format } from 'date-fns';
+import { getToday } from '@/lib/utils';
 
 export default function LeaderboardHud() {
 	const [players, setPlayers] = useState<PlayerType[]>();
@@ -49,7 +50,8 @@ export default function LeaderboardHud() {
 
 	useEffect(() => {
 		if (sheetOpen) {
-			setDateTime(new Date());
+			const d = new Date(getToday().current);
+			setDateTime(d);
 		}
 	}, [sheetOpen]);
 
@@ -79,7 +81,7 @@ export default function LeaderboardHud() {
 					/>{' '}
 					Top Solvers
 					<div className='text-xs text-muted-foreground'>
-						{format(dateTime, 'ee PP h:mm a')}
+						*{format(dateTime, 'eee PP h:mm a')}
 					</div>
 				</SheetTitle>
 				<SheetDescription></SheetDescription>
