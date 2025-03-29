@@ -297,7 +297,7 @@ export async function getCurrentUserScore() {
 			throw new Error('There was a problem getting user score');
 		}
 
-		console.log('SCORE: ', retScore);
+		//console.log('SCORE: ', retScore);
 
 		return {
 			success: true,
@@ -350,7 +350,7 @@ export async function getCurrentUserReveals() {
 			throw new Error('There was a problem getting user reveals');
 		}
 
-		console.log('REVEALS: ', retReveal);
+		//console.log('REVEALS: ', retReveal);
 
 		return {
 			success: true,

@@ -24,7 +24,7 @@ export default async function Home() {
 	const wordList = (shuffled as GetRawWord[]) ?? [];
 
 	return (
-		<div className='flex flex-col gap-2'>
+		<div className='flex flex-col gap-1'>
 			<StatsHud />
 			<div className='text-center w-full flex flex-row items-center justify-center gap-1'>
 				<div>Words that start with</div>
@@ -33,7 +33,7 @@ export default async function Home() {
 				</div>
 			</div>
 
-			<div className='flex flex-col gap-3'>
+			<div className='flex flex-col gap-2'>
 				<CarouselWords words={wordList} />
 			</div>
 			<PromoDialog />

@@ -16,9 +16,12 @@ import { getLeaderboardUsers } from '@/actions/leaderboard-actions';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { WinContext } from '@/contexts/win-context';
+import { format } from 'date-fns';
 
 export default function LeaderboardHud() {
 	const [players, setPlayers] = useState<PlayerType[]>();
+	const [sheetOpen, setSheetOpen] = useState(false);
+	const [dateTime, setDateTime] = useState(new Date());
 
 	const winContext = useContext(WinContext);
 
@@ -44,8 +47,16 @@ export default function LeaderboardHud() {
 		getPlayers();
 	}, []);
 
+	useEffect(() => {
+		if (sheetOpen) {
+			setDateTime(new Date());
+		}
+	}, [sheetOpen]);
+
 	return (
-		<Sheet>
+		<Sheet
+			open={sheetOpen}
+			onOpenChange={setSheetOpen}>
 			<SheetTrigger asChild>
 				<Button className='p-2'>
 					<UseAnimations
@@ -67,6 +78,9 @@ export default function LeaderboardHud() {
 						autoPlay={true}
 					/>{' '}
 					Top Solvers
+					<div className='text-xs text-muted-foreground'>
+						{format(dateTime, 'ee PP h:mm a')}
+					</div>
 				</SheetTitle>
 				<SheetDescription></SheetDescription>
 				<div className='flex flex-col gap-2'>

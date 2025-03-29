@@ -77,6 +77,8 @@ export async function createDailyReward() {
 			logForToday = todaysLog;
 		}
 
+		console.log('LOG FOR TODAY: hasLOg', !isFreshSession);
+
 		return {
 			success: true,
 			message: 'success',
