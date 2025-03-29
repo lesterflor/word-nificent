@@ -9,29 +9,37 @@ import { MdScore } from 'react-icons/md';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Button } from '../ui/button';
 import { ImEyePlus } from 'react-icons/im';
+import { FaSpinner } from 'react-icons/fa6';
 
 export default function UserScore() {
 	const [userScore, setUserScore] = useState(0);
+	const [isFetching, setIsFetching] = useState(true);
 
 	const winContext = useContext(WinContext);
 	const buyRevealContext = useContext(BuyRevealContext);
 
 	const getUserScore = async () => {
+		setIsFetching(true);
 		const res = await getCurrentUserScore();
 
 		if (res.success && res.data) {
 			const { score } = res.data as GetUserScore;
 			setUserScore(score);
 		}
+
+		setIsFetching(false);
 	};
 
 	const updateScore = async (score: number = 0) => {
+		setIsFetching(true);
 		const res = await updateUserScore(userScore + score);
 
 		if (res.success && res.data) {
 			const { score: updatedScore } = res.data as GetUserScore;
 			setUserScore(updatedScore);
 		}
+
+		setIsFetching(false);
 	};
 
 	useEffect(() => {
@@ -58,9 +66,17 @@ export default function UserScore() {
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
-				<Button variant='secondary'>
+				<Button
+					variant='secondary'
+					className='w-14'>
 					<MdScore className='w-12 h-12' />
-					{userScore > 0 ? userScore : ''}
+					{isFetching ? (
+						<FaSpinner className='w-4 h-4 animate-spin' />
+					) : userScore > 0 ? (
+						userScore
+					) : (
+						''
+					)}
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent className='flex flex-col gap-2 text-xs text-muted-foreground'>

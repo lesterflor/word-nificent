@@ -71,7 +71,7 @@ export default async function UserButton() {
 						</div>
 					</DropdownMenuLabel>
 
-					{user?.role === 'admin' && (
+					{/* {user?.role === 'admin' && (
 						<>
 							<DropdownMenuItem>
 								<Link
@@ -81,7 +81,7 @@ export default async function UserButton() {
 								</Link>
 							</DropdownMenuItem>
 						</>
-					)}
+					)} */}
 
 					<DropdownMenuItem asChild>
 						<div className=' flex flex-col items-end justify-end'>

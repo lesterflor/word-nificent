@@ -8,11 +8,13 @@ import { useContext, useEffect, useState } from 'react';
 import { WinContext } from '@/contexts/win-context';
 import UserScore from './user-score';
 import UserReveals from './user-reveals';
+import { Skeleton } from '../ui/skeleton';
 
 export default function StatsHud() {
 	const { data: session } = useSession();
 	const user = session?.user as GetUser;
 	const [solvedWords, setSolvedWords] = useState<GetRawWord[]>();
+	const [isFetching, setIsFetching] = useState(true);
 
 	const winContext = useContext(WinContext);
 
@@ -23,11 +25,14 @@ export default function StatsHud() {
 	}, [winContext]);
 
 	const getUserInfo = async () => {
+		setIsFetching(true);
 		const res = await getUserById(user.id);
 
 		if (res.wordsSolved) {
 			setSolvedWords(res.wordsSolved);
 		}
+
+		setIsFetching(false);
 	};
 
 	useEffect(() => {
@@ -35,7 +40,7 @@ export default function StatsHud() {
 	}, []);
 
 	return (
-		<div className='flex flex-row justify-between items-center gap-2 pt-4'>
+		<div className='flex flex-row justify-between items-center gap-2 pt-2'>
 			{/* <div className='flex flex-row items-center gap-2 w-fit'>
 				<Avatar>
 					<AvatarImage src={user.image} />
@@ -50,8 +55,14 @@ export default function StatsHud() {
 			</div>
 
 			<div className='text-xs text-muted-foreground'>
-				You have solved {solvedWords?.length}{' '}
-				{solvedWords?.length === 1 ? 'word' : 'words'}
+				{isFetching ? (
+					<Skeleton className='w-36 h-3' />
+				) : (
+					<>
+						You have solved {solvedWords?.length}{' '}
+						{solvedWords?.length === 1 ? 'word' : 'words'}
+					</>
+				)}
 			</div>
 		</div>
 	);

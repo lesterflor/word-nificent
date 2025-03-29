@@ -18,12 +18,14 @@ import { GiSquirrel } from 'react-icons/gi';
 import { ArrowLeftRight } from 'lucide-react';
 import { ImEyePlus } from 'react-icons/im';
 import { SpendRevealContext } from '@/contexts/spend-reveal-context';
+import { FaSpinner } from 'react-icons/fa6';
 
 export default function UserReveals() {
 	const [userReveals, setUserReveals] = useState(0);
 	const [reqReveals, setReqReveals] = useState(0);
 	const [userScore, setUserScore] = useState(0);
 	const [containerOpen, setContainerOpen] = useState(false);
+	const [isFetching, setIsFetching] = useState(true);
 
 	const inputRef = useRef<HTMLInputElement>(null);
 
@@ -32,6 +34,7 @@ export default function UserReveals() {
 	const spendRevealContext = useContext(SpendRevealContext);
 
 	const getUserReveals = async () => {
+		setIsFetching(true);
 		const res = await getCurrentUserReveals();
 
 		if (res.success && res.data) {
@@ -42,9 +45,12 @@ export default function UserReveals() {
 			setUserReveals(balance);
 			setUserScore(currUserScore[0].score);
 		}
+
+		setIsFetching(false);
 	};
 
 	const buyReveals = async () => {
+		setIsFetching(false);
 		const res = await buyUserReveals(reqReveals);
 
 		if (res.success && res.data) {
@@ -70,9 +76,12 @@ export default function UserReveals() {
 		} else {
 			toast.error(res.message);
 		}
+
+		setIsFetching(false);
 	};
 
 	const spendReveals = async (amt: number) => {
+		setIsFetching(true);
 		const res = await updateUserReveals(amt);
 
 		if (res.success && res.data) {
@@ -83,6 +92,8 @@ export default function UserReveals() {
 		} else {
 			toast.error(res.message);
 		}
+
+		setIsFetching(false);
 	};
 
 	useEffect(() => {
@@ -117,9 +128,15 @@ export default function UserReveals() {
 				open={containerOpen}
 				onOpenChange={setContainerOpen}>
 				<PopoverTrigger asChild>
-					<Button>
+					<Button className='w-14'>
 						<ImEyePlus className='w-8 h-8' />
-						{userReveals > 0 ? userReveals : ''}
+						{isFetching ? (
+							<FaSpinner className='w-4 h-2 animate-spin' />
+						) : userReveals > 0 ? (
+							userReveals
+						) : (
+							''
+						)}
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent className='flex flex-col gap-2'>

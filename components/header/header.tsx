@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import ModeToggle from './mode-toggle';
 import UserButton from './user-button';
 import { auth } from '@/db/auth';
 import { FaPuzzlePiece } from 'react-icons/fa6';
@@ -59,9 +58,9 @@ export default async function SiteHeader() {
 				</div>
 
 				<div className='flex flex-row justify-end gap-2 items-center'>
-					<div>
+					{/* <div>
 						<ModeToggle />
-					</div>
+					</div> */}
 
 					<UserButton />
 				</div>
