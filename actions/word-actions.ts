@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/db/prisma';
-import { formatError } from '@/lib/utils';
+import { formatError, getRandomLetter, shuffle } from '@/lib/utils';
 import {
 	GetRawWord,
 	GetUser,
@@ -82,7 +82,11 @@ export async function getWords() {
 	}
 }
 
-export async function getRawWords(letter: string = '') {
+export async function getRawWords(
+	letter: string = '',
+	minLen: number = 3,
+	maxLen: number = 11 // set to 11 for UI purposes
+) {
 	try {
 		const session = await auth();
 
@@ -118,7 +122,7 @@ export async function getRawWords(letter: string = '') {
 			include: {
 				definitions: true
 			},
-			take: 100
+			take: 500
 		});
 
 		if (!words) {
@@ -127,7 +131,9 @@ export async function getRawWords(letter: string = '') {
 
 		const filtered = words.filter(
 			(word) =>
-				word.name !== '' && word.name.length < 11 && word.name.length > 4
+				word.name !== '' &&
+				word.name.length < maxLen &&
+				word.name.length > minLen
 		);
 
 		return {
@@ -302,4 +308,20 @@ export async function updateUserSolvedWord(rawWordId: string) {
 			message: formatError(error)
 		};
 	}
+}
+
+export async function getfilterWordList(
+	letter: string = '',
+	minLen: number = 3,
+	maxLen: number = 11
+) {
+	const currentLetter = letter ? letter : getRandomLetter();
+
+	const rawWords = await getRawWords(currentLetter, minLen, maxLen);
+
+	const shuffled = shuffle([...(rawWords.data ?? [])]);
+
+	const wordList = (shuffled as GetRawWord[]) ?? [];
+
+	return { wordList, currentLetter };
 }
